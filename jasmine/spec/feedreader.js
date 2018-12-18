@@ -40,9 +40,9 @@ $(function() {
          	{
      			allFeeds.forEach(function(Feed) {
          		expect(Feed.name).toBeDefined();
-            	expect(Feed.name.length).not.toBe(0);
-        	 });
-    	});
+            		expect(Feed.name.length).not.toBe(0);
+        		});
+    		});
 	});
 
     /* TODO: Write a new test suite named "The menu" */
@@ -65,7 +65,7 @@ $(function() {
           	$('.menu-icon-link').click();
           	expect($('body').hasClass('menu-hidden')).toBe(false);
         
-          //another click to do the reverse
+          	//another click to do the reverse
           	$('.menu-icon-link').click();
           	expect($('body').hasClass('menu-hidden')).toBe(true);
           });
@@ -78,15 +78,15 @@ $(function() {
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          */
-         beforeEach(function(done) {
+         	beforeEach(function(done) {
          	loadFeed(0,done);
-         });
+        	 });
    	 	
    	 	it('atleast single entry is within feed',function()
    	 	{
    	 		expect($('.feed .entry').length).toBeGreaterThan(0);
    	 	});
-   	 });
+    });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
     describe('New Feed Selection',function()
