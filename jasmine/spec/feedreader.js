@@ -1,118 +1,92 @@
 /* feedreader.js */
 
-/* We're placing all of our tests within the $() function,
- * since some of these tests may require DOM elements. We want
- * to ensure they don't run until the DOM is ready.
- */
 $(function() {
-    /* This suite is all about the RSS
-    * feeds definitions, the allFeeds variable in our application.
-    */
+    /* This suite is all about the RSS */
     describe('RSS Feeds', function() {
-        /* This is our first test - it tests to make sure that the
-         * allFeeds variable has been defined and that it is not
-         * empty.
-         */
+        // TODO: Test to make sure allFeeds variable is defined and no-empty. 
         it('are defined', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
 
+        // TODO: Test to check that allFeeds has defined and non-empty URL
+            it('URL is defined',function()
+            {
+                allFeeds.forEach(function(Feed) {
+                	expect(Feed.url).toBeDefined();
+                	expect(Feed.url.length).not.toBe(0);
+                });
+            });
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a URL defined
-         * and that the URL is not empty.
-         */
-         	it('URL is defined',function()
-         	{
-         		allFeeds.forEach(function(Feed) {
-            	expect(Feed.url).toBeDefined();
-            	expect(Feed.url.length).not.toBe(0);
-            	});
-         	});
+        // TODO: Test to check that allFeeds has defined and non-empty name
+            it('name is defined',function()
+            {
+                allFeeds.forEach(function(Feed) {
+                	expect(Feed.name).toBeDefined();
+                	expect(Feed.name.length).not.toBe(0);
+             });
+        });
+    });
 
-
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
-         */
-         	it('name is defined',function()
-         	{
-     			allFeeds.forEach(function(Feed) {
-         		expect(Feed.name).toBeDefined();
-            		expect(Feed.name.length).not.toBe(0);
-        		});
-    		});
-	});
-
-    /* TODO: Write a new test suite named "The menu" */
+    // TODO: Test suite ->"The menu"
     describe('The menu',function()
     {
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. 
-         */
-    	it('hidden by default',function()
-    	{
-    		expect($('body').hasClass('menu-hidden')).toEqual(true);
-    	});
+        // TODO: Test to ensure menu is hidden by default
+        it('hidden by default',function()
+        {
+            expect($('body').hasClass('menu-hidden')).toEqual(true);
+        });
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked.
-          */
+         // TODO: Test to ensure menu toggle
           it('should toggle menu',function()
           {
-         	//click to open the menu
-          	$('.menu-icon-link').click();
-          	expect($('body').hasClass('menu-hidden')).toBe(false);
+            //click to open the menu
+            $('.menu-icon-link').click();
+            expect($('body').hasClass('menu-hidden')).toBe(false);
         
-          	//another click to do the reverse
-          	$('.menu-icon-link').click();
-          	expect($('body').hasClass('menu-hidden')).toBe(true);
+          //another click to do the reverse
+            $('.menu-icon-link').click();
+            expect($('body').hasClass('menu-hidden')).toBe(true);
           });
     });
 
-    /* TODO: Write a new test suite named "Initial Entries" */
+    // TODO:Test suite ->"Initial Entries"
     describe('Initial Entries',function()
     {
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         */
-         	beforeEach(function(done) {
-         	loadFeed(0,done);
-        	 });
-   	 	
-   	 	it('atleast single entry is within feed',function()
-   	 	{
-   	 		expect($('.feed .entry').length).toBeGreaterThan(0);
-   	 	});
-    });
+        /* TODO:Test to ensure that loadFeed completes work with atleast one
+        entry within .feed container
+        */
+         beforeEach(function(done) {
+            loadFeed(0,done);
+         });
+        
+        it('atleast single entry is within feed',function()
+        {
+            expect($('.feed .entry').length).toBeGreaterThan(0);
+        });
+     });
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+    // TODO:Test suite -> "New Feed Selection" 
     describe('New Feed Selection',function()
     {
-        /* TODO: Write a test that ensures when a new feed is loaded
+        /* TODO:Test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          */
-
-         let previousFeed,currentFeed;
-
-         beforeEach(function(done)
-         {
-         	loadFeed(1,function() {
-         		previousFeed = $('.feed').html();
-         		done();
-         	});
-         	loadFeed(2,function() {
-         		currentFeed = $('.feed').html();
-         		done();
-         	});
+        let oldFeed,newFeed;
+        
+        beforeEach(function(done){
+        	loadFeed(0, function(){
+                	oldfeed =$('.feed').html();
+                	loadFeed(1, function() {
+                    		newFeed =$('.feed').html();        
+                    		done(); // call done when variables are fed and tests to begin
+                	});
+            	});
          });
-
+        
          it('check for content changes',function(done) {
-         	expect(previousFeed !== currentFeed).toBe(true);
-         	done();
+            expect(oldFeed !== newFeed).toBe(true);
+            done();
          });
     });
-
 }());
